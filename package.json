@@ -1,0 +1,23 @@
+{
+  "name": "speak",
+  "version": "1.0.0",
+  "description": "MQTT service to text to speech to an attached speaker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RoboDomo/speak.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RoboDomo/speak/issues"
+  },
+  "homepage": "https://github.com/RoboDomo/speak#readme",
+  "dependencies": {
+    "say": "^0.14.0"
+  }
+}
