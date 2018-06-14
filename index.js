@@ -10,7 +10,9 @@ const queue = [];
 
 const run_queue = async () => {
   while (queue.length) {
-    await speak(queue.pop());
+    const message = queue.pop();
+    console.log("saying ", message);
+    await speak(message);
   }
 };
 
@@ -34,7 +36,7 @@ client.on("connect", () => {
 client.on("message", async (topic, message) => {
   debug("topic", topic, "message", message.toString());
   queue.push(message.toString());
-  if (queue.length > 1) {
+  if (queue.length == 1) {
     run_queue();
   }
 });
