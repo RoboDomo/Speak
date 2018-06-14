@@ -6,6 +6,14 @@ const debug = require("debug")("speak"),
   uri = `mqtt://${process.env.MQTT_HOST}`,
   client = mqtt.connect(uri);
 
+const queue = [];
+
+const run_queue = async () => {
+  while (queue.length) {
+    await speak(queue.pop());
+  }
+};
+
 const speak = async text => {
   return new Promise((resolve, reject) => {
     say.speak(text, null, null, err => {
@@ -25,7 +33,10 @@ client.on("connect", () => {
 
 client.on("message", async (topic, message) => {
   debug("topic", topic, "message", message.toString());
-  await speak(message.toString());
+  queue.push(message.toString());
+  if (queue.length > 1) {
+    run_queue();
+  }
 });
 
 client.on("error", e => {
