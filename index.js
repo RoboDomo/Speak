@@ -11,7 +11,7 @@ const queue = [];
 const run_queue = async () => {
   while (queue.length) {
     const message = queue.pop();
-    console.log("saying ", message);
+    debug("saying ", message);
     await speak(message);
   }
 };
@@ -45,9 +45,3 @@ client.on("error", e => {
   debug("error", e);
 });
 
-//const main = async () => {
-//  await speak("The garage door is open");
-//  await speak("The garage door is closed");
-//};
-
-//main();
