@@ -44,3 +44,7 @@ client.on("message", async (topic, message) => {
 client.on("error", e => {
   debug("error", e);
 });
+
+process.once("SIGHUP", function() {
+  process.exit(0);
+});
