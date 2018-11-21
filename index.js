@@ -46,5 +46,5 @@ client.on("error", e => {
 });
 
 process.once("SIGHUP", function() {
-  process.exit(0);
+  process.exit(1);
 });
