@@ -4,7 +4,7 @@
   "description": "MQTT service to text to speech to an attached speaker",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/pm2 start ./index.js",
+    "start": "./node_modules/.bin/forever start ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
