@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/RoboDomo/speak#readme",
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "^3.2.6",
     "forever": "^0.15.3",
-    "mqtt": "^2.18.1",
-    "nodemon": "^1.17.5",
-    "pm2": "^3.2.2",
+    "mqtt": "^2.18.8",
+    "nodemon": "^1.18.9",
+    "pm2": "^3.2.3",
     "say": "^0.14.0"
   }
 }

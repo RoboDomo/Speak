@@ -35,10 +35,21 @@ client.on("connect", () => {
 
 client.on("message", async (topic, message) => {
   debug("topic", topic, "message", message.toString());
-  queue.push(message.toString());
-  if (queue.length == 1) {
-    run_queue();
+  try {
+    await say.stop();
+  } catch (e) {
+    //    debug("stop exception", e);
   }
+  try {
+    await speak(message.toString());
+  } catch (e) {
+    debug("speak exception", e);
+  }
+  process.exit(0);
+  //  queue.push(message.toString());
+  //  if (queue.length == 1) {
+  //    run_queue();
+  //  }
 });
 
 client.on("error", e => {
