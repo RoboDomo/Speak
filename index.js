@@ -28,9 +28,10 @@ const speak = async text => {
   });
 };
 
-client.on("connect", () => {
+client.on("connect", async () => {
   debug("connected");
   client.subscribe("say");
+  await speak("speak activated");
 });
 
 client.on("message", async (topic, message) => {
@@ -57,5 +58,10 @@ client.on("error", e => {
 });
 
 process.once("SIGHUP", function() {
+  speak("speak done");
+  process.exit(1);
+});
+process.once("SIGTERM", function() {
+  speak("speak done");
   process.exit(1);
 });
