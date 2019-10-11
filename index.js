@@ -46,11 +46,11 @@ client.on("message", async (topic, message) => {
   } catch (e) {
     debug("speak exception", e);
   }
-  process.exit(0);
-  //  queue.push(message.toString());
-  //  if (queue.length == 1) {
-  //    run_queue();
-  //  }
+  //  process.exit(0);
+  queue.push(message.toString());
+  if (queue.length == 1) {
+    run_queue();
+  }
 });
 
 client.on("error", e => {
