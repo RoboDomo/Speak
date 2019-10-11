@@ -6,6 +6,28 @@ const debug = require("debug")("speak"),
   uri = `mqtt://${process.env.MQTT_HOST}`,
   client = mqtt.connect(uri);
 
+process.once("SIGHUP", async () => {
+  console.log("SIGHUP event");
+  await speak("speak done");
+  process.exit(1);
+});
+
+process.once("SIGTERM", async () => {
+  console.log("SIGTERM event");
+  await speak("speak done");
+  process.exit(1);
+});
+
+process.on("exit", async code => {
+  console.log("exit event");
+  await speak("speak done");
+});
+
+process.on("beforeExit", async code => {
+  console.log("beforeExit event");
+  await speak("speak done");
+});
+
 const queue = [];
 
 const run_queue = async () => {
@@ -28,40 +50,24 @@ const speak = async text => {
   });
 };
 
-client.on("connect", async () => {
-  debug("connected");
-  client.subscribe("say");
-  await speak("speak activated");
-});
-
-client.on("message", async (topic, message) => {
-  debug("topic", topic, "message", message.toString());
-  try {
-    await say.stop();
-  } catch (e) {
-    //    debug("stop exception", e);
-  }
-  try {
-    await speak(message.toString());
-  } catch (e) {
-    debug("speak exception", e);
-  }
-  //  process.exit(0);
+const queue_message = async message => {
   queue.push(message.toString());
   if (queue.length == 1) {
     run_queue();
   }
+};
+
+client.on("connect", async () => {
+  debug("connected");
+  client.subscribe("say");
+  queue_message("Speak ready");
+});
+
+client.on("message", async (topic, message) => {
+  debug("topic", topic, "message", message.toString());
+  queue_message(message.toString());
 });
 
 client.on("error", e => {
   debug("error", e);
-});
-
-process.once("SIGHUP", function() {
-  speak("speak done");
-  process.exit(1);
-});
-process.once("SIGTERM", function() {
-  speak("speak done");
-  process.exit(1);
 });
